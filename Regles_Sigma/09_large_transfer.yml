@@ -1,0 +1,32 @@
+title: Helios - Volume sortant vers la destination suspecte
+id: b01512a8-b6c4-487a-b391-d453bbbdd2f9
+status: experimental
+description: 'Seuil de triage d''un milliard d''octets par connexion, non calibre statistiquement.
+  orig_bytes suppose que l''initiateur est l''hote interne. Le champ bytes du journal simplifie ne
+  precise pas le sens : test reconstruit selon l''alerte. Ne prouve ni exfiltration ni protocole
+  non chiffre ; T1048.003 reste a confirmer.'
+references:
+- https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html
+author: Projet CTI Helios Energy
+date: '2026-10-10'
+logsource:
+  product: zeek
+  service: conn
+detection:
+  selection:
+    id.resp_h: 203.0.113.28
+    id.resp_p: 8080
+    orig_bytes|gte: 1000000000
+  condition: selection
+falsepositives:
+- Transfert autorise vers cette destination
+- Rejeu de trafic
+level: high
+tags: []
+x_helios:
+  tlp: AMBER
+  sources:
+  - '03_alertes_siem_12.csv: alerte 10'
+  - '05_journaux_bruts.log: ligne 10'
+  - '02_indicateurs_40.csv: indicateur 24'
+  scope: Exercice fictif ; adapter avant production

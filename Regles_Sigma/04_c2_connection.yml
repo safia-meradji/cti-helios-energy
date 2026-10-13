@@ -1,0 +1,33 @@
+title: Helios - Connexion TLS vers les IP C2 connues
+id: 8554ebcb-e470-44cd-90e8-3c71760be904
+status: experimental
+description: Detecte un contact vers les IP du scenario sur 443 ; ne mesure pas la periodicite et
+  ne prouve pas HTTPS. Confirmer avec ssl.log/http.log et une correlation temporelle.
+references:
+- https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html
+author: Projet CTI Helios Energy
+date: '2026-10-10'
+logsource:
+  product: zeek
+  service: conn
+detection:
+  selection:
+    id.resp_h:
+    - 198.51.100.24
+    - 203.0.113.14
+    - 203.0.113.15
+    id.resp_p: 443
+  condition: selection
+falsepositives:
+- Rejeu du laboratoire
+- Investigation SOC
+level: high
+tags:
+- attack.t1071.001
+x_helios:
+  tlp: AMBER
+  sources:
+  - '03_alertes_siem_12.csv: alerte 4'
+  - '05_journaux_bruts.log: ligne 4'
+  - '02_indicateurs_40.csv: indicateurs 20-22'
+  scope: Exercice fictif ; adapter avant production

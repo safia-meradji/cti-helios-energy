@@ -1,0 +1,34 @@
+title: Helios - Office lance PowerShell encode et masque
+id: 038118d1-5afb-4ad8-a5fe-9f62f85e3539
+status: experimental
+description: Detecte la combinaison observee ; ne couvre pas toutes les variantes de parametres PowerShell.
+  Le journal cite Word alors que BIN-01 est un classeur Excel.
+references:
+- https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html
+author: Projet CTI Helios Energy
+date: '2026-10-10'
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    ParentImage|endswith:
+    - winword.exe
+    - excel.exe
+    Image|endswith: powershell.exe
+    CommandLine|contains|all:
+    - ' -enc'
+    - ' -w hidden'
+  condition: selection
+falsepositives:
+- Macros administratives autorisees
+level: high
+tags:
+- attack.t1059.001
+x_helios:
+  tlp: AMBER
+  sources:
+  - '03_alertes_siem_12.csv: alerte 1'
+  - '05_journaux_bruts.log: ligne 1'
+  - '01_fiches_analyse_binaires.md: BIN-01'
+  scope: Exercice fictif ; adapter avant production

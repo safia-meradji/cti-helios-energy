@@ -1,0 +1,31 @@
+title: Helios - Requete proxy vers livraison ou repli connus
+id: 4948dd65-1ac5-4f5e-94ab-4ce0668a06a1
+status: experimental
+description: Detecte des URL fictives connues. Une requete ne prouve ni execution du fichier ni bascule
+  effective du C2. c-uri doit contenir l'URL complete ; visibilite HTTPS requise.
+references:
+- https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html
+author: Projet CTI Helios Energy
+date: '2026-10-10'
+logsource:
+  category: proxy
+detection:
+  selection:
+    c-uri|startswith:
+    - https://cdn-svc-update.test/win/svchost_update.exe
+    - https://static-assets-cache.test/
+  condition: selection
+falsepositives:
+- Rejeu du laboratoire
+- Investigation SOC
+level: high
+tags:
+- attack.t1105
+- attack.t1008
+x_helios:
+  tlp: AMBER
+  sources:
+  - '03_alertes_siem_12.csv: alertes 2 et 11'
+  - '05_journaux_bruts.log: lignes 2 et 11'
+  - '02_indicateurs_40.csv: indicateurs 13,16,29'
+  scope: Exercice fictif ; adapter avant production

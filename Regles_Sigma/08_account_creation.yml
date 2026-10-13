@@ -1,0 +1,30 @@
+title: Helios - Creation du compte svc-backup-temp
+id: a65e24b4-083c-43d1-913d-c09d1dc72f9a
+status: experimental
+description: Detecte la creation, sans prouver la suppression apres 45 minutes. Correlation 4720/4726
+  requise pour cela. T1543.003 concerne les services Windows et ne convient pas a cette seule creation
+  de compte.
+references:
+- https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html
+author: Projet CTI Helios Energy
+date: '2026-10-10'
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4720
+    TargetUserName: svc-backup-temp
+  condition: selection
+falsepositives:
+- Creation autorisee de compte temporaire
+level: high
+tags:
+- attack.t1136
+x_helios:
+  tlp: AMBER
+  sources:
+  - '03_alertes_siem_12.csv: alerte 9'
+  - '05_journaux_bruts.log: ligne 9'
+  - '02_indicateurs_40.csv: indicateur 37'
+  scope: Exercice fictif ; adapter avant production

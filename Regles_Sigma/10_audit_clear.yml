@@ -1,0 +1,27 @@
+title: Helios - Effacement du journal de securite
+id: f3a8d8e9-5c78-46da-bf62-8e3526998437
+status: experimental
+description: Detecte l'effacement du journal Security avec l'evenement 1102. Ne detecte pas tous
+  les journaux ni la commande wevtutil seule.
+references:
+- https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html
+author: Projet CTI Helios Energy
+date: '2026-10-10'
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 1102
+  condition: selection
+falsepositives:
+- Maintenance exceptionnelle autorisee
+level: high
+tags:
+- attack.t1070.001
+x_helios:
+  tlp: AMBER
+  sources:
+  - '03_alertes_siem_12.csv: alerte 12'
+  - '05_journaux_bruts.log: ligne 12'
+  scope: Exercice fictif ; adapter avant production

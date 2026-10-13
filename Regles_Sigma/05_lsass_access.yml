@@ -1,0 +1,31 @@
+title: Helios - Acces LSASS avec le masque observe
+id: 845e845d-b3a5-4670-b40e-90a3d200011e
+status: experimental
+description: Sysmon evenement 10 requis. Le masque 0x1010 indique un acces suspect dans ce contexte
+  ; il ne prouve pas une extraction. Aucun SourceImage executable n'est invente a partir du nom de
+  DLL.
+references:
+- https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html
+author: Projet CTI Helios Energy
+date: '2026-10-10'
+logsource:
+  product: windows
+  category: process_access
+detection:
+  selection:
+    TargetImage|endswith: lsass.exe
+    GrantedAccess: '0x1010'
+  condition: selection
+falsepositives:
+- EDR et antivirus
+- Outils de diagnostic autorises
+level: high
+tags:
+- attack.t1003.001
+x_helios:
+  tlp: AMBER
+  sources:
+  - '03_alertes_siem_12.csv: alerte 5'
+  - '05_journaux_bruts.log: ligne 8'
+  - '01_fiches_analyse_binaires.md: BIN-03'
+  scope: Exercice fictif ; adapter avant production
